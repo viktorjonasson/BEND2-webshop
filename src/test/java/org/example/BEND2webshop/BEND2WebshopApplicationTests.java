@@ -1,10 +1,10 @@
-package org.viktorjonasson.bend2webshop;
+package org.example.BEND2webshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Bend2WebshopApplicationTests {
+class BEND2WebshopApplicationTests {
 
     @Test
     void contextLoads() {
