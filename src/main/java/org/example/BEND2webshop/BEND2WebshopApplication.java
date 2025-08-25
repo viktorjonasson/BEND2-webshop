@@ -1,13 +1,13 @@
-package org.example.bend2gradle;
+package org.example.BEND2webshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Bend2GradleApplication {
+public class BEND2WebshopApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Bend2GradleApplication.class, args);
+        SpringApplication.run(BEND2WebshopApplication.class, args);
     }
 
 }

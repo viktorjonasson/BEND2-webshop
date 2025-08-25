@@ -1,10 +1,10 @@
-package org.example.bend2gradle;
+package org.example.BEND2webshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Bend2GradleApplicationTests {
+class BEND2WebshopApplicationTests {
 
     @Test
     void contextLoads() {
