@@ -3,5 +3,8 @@ package org.example.BEND2webshop.repositories;
 import org.example.BEND2webshop.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<User, UUID> {
+    public User findUserByUsername(String username);
 }
