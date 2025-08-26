@@ -17,16 +17,10 @@ public class PlacePurchaseController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/products/{id}/buy")
-    public String placePurchase(@PathVariable ("id") Long productId, Long userId) {
+    @PostMapping("/products/{productId}/buy/{userId}")
+    public String placePurchase(@PathVariable Long productId,
+                                @PathVariable Long userId) {
         Long purchaseId = purchaseService.placePurchase(productId, userId);
         return "redirect:/orders/" + purchaseId;
     }
-
-    /*
-    Skapar order: skapar ID
-    Tar in: product ID
-    Add to model: redirect to /orders and populate with data
-     */
-
 }

@@ -2,39 +2,43 @@ package org.example.BEND2webshop.services;
 
 import org.example.BEND2webshop.models.Product;
 import org.example.BEND2webshop.models.Purchase;
+import org.example.BEND2webshop.models.User;
+import org.example.BEND2webshop.repositories.ProductRepository;
 import org.example.BEND2webshop.repositories.PurchaseRepository;
+import org.example.BEND2webshop.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class PurchaseService {
 
     private final PurchaseRepository purchaseRepository;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
-    public PurchaseService(PurchaseRepository purchaseRepository) {
+    public PurchaseService(PurchaseRepository purchaseRepository, ProductRepository productRepository, UserRepository userRepository) {
         this.purchaseRepository = purchaseRepository;
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     public Long placePurchase(Long productId, Long userId) {
 
-        //Create order by building a model and return orderId created.
-        Purchase purchase = new Purchase();
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
-        // ToDo: Complete model and DTO for purchase
+        Purchase purchase = Purchase.builder()
+                .purchaseDate(LocalDateTime.now())
+                .product(product)
+                .user(user)
+                .build();
 
-//        purchase.setPurchaseDate(LocalDate.now());
-//        purchase.setProductId(productId);
-//        purchase.setUserId(userId);
+        Purchase placedPurchase = purchaseRepository.save(purchase);
 
-        purchaseRepository.save(purchase);
-
-        /*
-        Create an order and save to DB.
-        Return order ID to controller.
-        Do I need to build a product model or just place product ID in the order row?
-         */
-
-        return null; //orderId;
+        return placedPurchase.getId();
     }
 }
