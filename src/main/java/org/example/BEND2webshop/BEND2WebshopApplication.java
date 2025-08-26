@@ -1,6 +1,6 @@
 package org.example.BEND2webshop;
 
-import org.example.BEND2webshop.services.UserDataSeeder;
+import org.example.BEND2webshop.security.UserDataSeeder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,10 +18,12 @@ public class BEND2WebshopApplication {
         SpringApplication.run(BEND2WebshopApplication.class, args);
     }
 
+//    Boostrap database with users
     @Bean
     CommandLineRunner commandLineRunner() {
         return args -> {
             userDataSeeder.Seed();
+//            productImportService.fetchAndSaveProducts();
         };
     }
 }
