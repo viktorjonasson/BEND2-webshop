@@ -18,9 +18,9 @@ public class PlacePurchaseController {
     private UserService userService;
 
     @PostMapping("/products/{id}/buy")
-    public String placePurchase(@PathVariable ("id") Long id) {
-        Long orderId = purchaseService.placePurchase(id);
-        return "redirect:/orders/" + orderId;
+    public String placePurchase(@PathVariable ("id") Long productId, Long userId) {
+        Long purchaseId = purchaseService.placePurchase(productId, userId);
+        return "redirect:/orders/" + purchaseId;
     }
 
     /*
