@@ -1,5 +1,6 @@
 package org.example.BEND2webshop.models;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -15,4 +16,13 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     private Long id;
+
+    private String title;
+    private Double price;
+    private String description;
+    private String category;
+    private String image;
+
+    @Embedded
+    public Rating rating;
 }

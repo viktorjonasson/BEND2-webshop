@@ -2,7 +2,11 @@ package org.example.BEND2webshop.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.criteria.Root;
+import org.example.BEND2webshop.dtos.ProductDto;
+import org.example.BEND2webshop.models.Product;
 import org.example.BEND2webshop.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
@@ -13,8 +17,10 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class ProductImportService {
 
+    @Autowired
     ProductRepository productRepository;
 
     public ProductImportService(ProductRepository productRepository) {
@@ -36,9 +42,11 @@ public class ProductImportService {
                 sb.append(line);
             }
 
-            Root[] products = objectMapper.readValue(sb.toString(), Root[].class);
+            ProductDto[] products = objectMapper.readValue(sb.toString(), ProductDto[].class);
 
-            List<Root> productList = Arrays.asList(products);
+            List<ProductDto> productDtoList = Arrays.asList(products);
+
+            productDtoList.forEach(System.out::println);
 
             //ToDo: Map Root objects to Product entities via DTOs
 
@@ -47,7 +55,6 @@ public class ProductImportService {
             //Save products to database
             //productRepository.saveAll(productList);
 
-            System.out.println("Saved " + productList.size() + " products");
 
         } catch (Exception e) {
             e.printStackTrace();
