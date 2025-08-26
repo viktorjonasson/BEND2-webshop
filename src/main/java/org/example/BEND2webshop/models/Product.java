@@ -1,5 +1,6 @@
 package org.example.BEND2webshop.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,6 +20,8 @@ public class Product {
 
     private String title;
     private Double price;
+
+    @Column(length = 3000)
     private String description;
     private String category;
     private String image;
