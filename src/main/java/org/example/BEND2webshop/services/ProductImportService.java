@@ -1,8 +1,11 @@
 package org.example.BEND2webshop.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.criteria.Root;
+import org.example.BEND2webshop.dtos.ProductDto;
+import org.example.BEND2webshop.models.Product;
 import org.example.BEND2webshop.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
@@ -13,8 +16,10 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class ProductImportService {
 
+    @Autowired
     ProductRepository productRepository;
 
     public ProductImportService(ProductRepository productRepository) {
@@ -36,21 +41,26 @@ public class ProductImportService {
                 sb.append(line);
             }
 
-            Root[] products = objectMapper.readValue(sb.toString(), Root[].class);
+            ProductDto[] productDtos = objectMapper.readValue(sb.toString(), ProductDto[].class);
+            List<ProductDto> productDtoList = Arrays.asList(productDtos);
+            List<Product> products = productDtoList.stream().map(this::convertToProduct).toList();
 
-            List<Root> productList = Arrays.asList(products);
-
-            //ToDo: Map Root objects to Product entities via DTOs
-
-            //Call method to map products to entities
-
-            //Save products to database
-            //productRepository.saveAll(productList);
-
-            System.out.println("Saved " + productList.size() + " products");
+            productRepository.saveAll(products);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+    private Product convertToProduct(ProductDto dto) {
+        return Product.builder()
+                .id(dto.getId())
+                .title(dto.getTitle())
+                .price(dto.getPrice())
+                .description(dto.getDescription())
+                .category(dto.getCategory())
+                .image(dto.getImage())
+                .rating(dto.getRating())
+                .build();
     }
 }
