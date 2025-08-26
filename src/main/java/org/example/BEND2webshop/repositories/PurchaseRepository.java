@@ -15,5 +15,4 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
     // User
 
-    List<Purchase> findByCustomerId(long id);
 }

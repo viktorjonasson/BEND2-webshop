@@ -17,7 +17,7 @@ public class Purchase {
     private Long id;
 
     private Long productId;
-    private Long buyerId;
+    private Long customerId;
 
     private Integer quantity;
 
