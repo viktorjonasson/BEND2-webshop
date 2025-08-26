@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+</head>
+<body>
+
+    <main>
+        <header>
+            <h1>Products</h1>
+        </header>
+
+        <section th:if="${#lists.isEmpty(products)}">
+            <h2>No products available</h2>
+            <p>There are currently no products in our inventory.</p>
+        </section>
+
+        <section th:unless="${#lists.isEmpty(products)}">
+            <div th:each="product : ${products}">
+                <article>
+                    <img th:src="${product.image}"
+                         th:alt="${product.title}">
+
+                    <header>
+                        <h2 th:text="${product.title}">Product Title</h2>
+                        <p><strong>Category:</strong> <span th:text="${product.category}">Category</span></p>
+                    </header>
+
+                    <p th:text="${product.description}">Product description...</p>
+
+                    <div th:if="${product.rating}">
+                        <p><strong>Rating:</strong> <span th:text="${product.rating.rate}"></span>/5
+                           (<span th:text="${product.rating.count}"></span> reviews)</p>
+                    </div>
+
+                    <footer>
+                        <p><strong>Price:</strong> $<span th:text="${#numbers.formatDecimal(product.price, 1, 2)}">0.00</span></p>
+                        <button type="button">Buy</button>
+                    </footer>
+                </article>
+                <hr>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
