@@ -1,2 +1,5 @@
 <h1>Home</h1>
-<a href="/logged-in">log in</a>
+<p>Welcome</p>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
