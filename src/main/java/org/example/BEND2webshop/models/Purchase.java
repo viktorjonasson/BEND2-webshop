@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @Builder
@@ -16,9 +18,10 @@ public class Purchase {
     @GeneratedValue
     private Long id;
 
+    private Long userId;
     private Long productId;
-    private Long customerId;
 
     private Integer quantity;
+    private LocalDateTime orderTime = LocalDateTime.now();
 
 }
