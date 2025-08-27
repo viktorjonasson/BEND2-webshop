@@ -53,6 +53,13 @@ public class PurchaseService {
                 .toList();
     }
 
+    public void deletePurchase(Long purchaseId) {
+        if (!purchaseRepository.existsById(purchaseId)) {
+            throw new RuntimeException("Purchase not found with ID: " + purchaseId);
+        }
+        purchaseRepository.deleteById(purchaseId);
+    }
+
     private PurchaseDto toDto(Purchase p) {
         return new PurchaseDto(
         p.getId(),
