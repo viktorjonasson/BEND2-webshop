@@ -1,7 +1,7 @@
 package org.example.BEND2webshop.services;
 
+
 import org.example.BEND2webshop.models.Product;
-import org.example.BEND2webshop.models.Purchase;
 import org.example.BEND2webshop.models.User;
 import org.example.BEND2webshop.repositories.ProductRepository;
 import org.example.BEND2webshop.repositories.PurchaseRepository;
@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.example.BEND2webshop.dtos.PurchaseDto;
+import org.example.BEND2webshop.models.Purchase;
+
+import java.util.List;
+
 
 @Service
 public class PurchaseService {
@@ -40,5 +46,20 @@ public class PurchaseService {
         Purchase placedPurchase = purchaseRepository.save(purchase);
 
         return placedPurchase.getId();
+    }
+
+    public List<PurchaseDto> getAllPurchases(){
+        return purchaseRepository.findAll()
+                .stream()
+                .map(this::toDto)
+                .toList();
+    }
+
+    private PurchaseDto toDto(Purchase p) {
+        return new PurchaseDto(
+        p.getId(),
+        p.getProductId(),
+        p.getQuantity()
+        );
     }
 }
