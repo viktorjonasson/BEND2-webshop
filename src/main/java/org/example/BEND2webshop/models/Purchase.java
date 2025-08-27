@@ -1,10 +1,7 @@
 package org.example.BEND2webshop.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,10 +15,15 @@ public class Purchase {
     @GeneratedValue
     private Long id;
 
-    private Long userId;
-    private Long productId;
+    private LocalDateTime purchaseDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private Integer quantity;
-    private LocalDateTime orderTime = LocalDateTime.now();
-
 }
