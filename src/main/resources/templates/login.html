@@ -1,9 +1,15 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>Spring Security Example </title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>
+
+<a th:href="@{/products}">Products</a>
+<a th:href="@{/register}">Register</a>
+<a th:href="@{/home}">Home</a>
+
+
 <div th:if="${param.error}">
     Invalid username and password.
 </div>
@@ -15,6 +21,4 @@
     <div><label> Password: <input type="password" name="password"/> </label></div>
     <div><input type="submit" value="Sign In"/></div>
 </form>
-<a href="/home">Home</a>
-</body>
 </html>
