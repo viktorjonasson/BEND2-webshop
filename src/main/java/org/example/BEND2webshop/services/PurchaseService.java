@@ -27,7 +27,7 @@ public class PurchaseService {
         return new PurchaseDto(
         p.getId(),
         p.getProductId(),
-        p.getQuantity() != null ? p.getQuantity() : 1
+        p.getQuantity()
         );
     }
 }
