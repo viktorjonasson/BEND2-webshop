@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="sv">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Alla ordrar</title>
+</head>
+<body>
+<h1>Alla ordrar</h1>
+
+<table border="1" cellpadding="6">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Användar-ID</th>
+        <th>Produkt-ID</th>
+        <th>Antal</th>
+        <th>Ordertid</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${purchases}">
+        <td th:text="${p.id}">1</td>
+        <td th:text="${p.userId}">10</td>
+        <td th:text="${p.productId}">200</td>
+        <td th:text="${p.quantity}">3</td>
+        <td th:text="${#temporals.format(p.orderTime, 'yyyy-MM-dd HH:mm')}">
+            2025-08-27 14:30
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
