@@ -31,12 +31,10 @@ public class PurchaseService {
         this.userRepository = userRepository;
     }
 
-    public Long placePurchase(Long productId, UUID userId) {
+    public Long placePurchase(Long productId, User user) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
         Purchase purchase = Purchase.builder()
                 .purchaseDate(LocalDateTime.now())
@@ -44,9 +42,7 @@ public class PurchaseService {
                 .user(user)
                 .build();
 
-        Purchase placedPurchase = purchaseRepository.save(purchase);
-
-        return placedPurchase.getId();
+        return purchaseRepository.save(purchase).getId();
     }
 
     public List<PurchaseDto> getAllPurchases(){

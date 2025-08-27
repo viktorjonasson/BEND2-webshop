@@ -1,10 +1,13 @@
 package org.example.BEND2webshop.controllers;
 
 import org.example.BEND2webshop.models.User;
+import org.example.BEND2webshop.security.ConcreteUserDetails;
 import org.example.BEND2webshop.services.ProductService;
 import org.example.BEND2webshop.services.PurchaseService;
 import org.example.BEND2webshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,9 +26,9 @@ public class PlacePurchaseController {
 
     @PostMapping("/products/{productId}/buy/")
     public String placePurchase(@PathVariable Long productId,
-                                @ModelAttribute User user) {
-//        TODO: ändra {userId}
-        Long purchaseId = purchaseService.placePurchase(productId, user.getId());
+                                @AuthenticationPrincipal ConcreteUserDetails userDetails) {
+        User user = userDetails.getUser();
+        Long purchaseId = purchaseService.placePurchase(productId, user);
         return "redirect:/orders/" + purchaseId;
     }
 }
