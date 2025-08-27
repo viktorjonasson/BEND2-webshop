@@ -24,6 +24,4 @@ public class Purchase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private AppUser appUser;
-
-    private Integer quantity;
 }
