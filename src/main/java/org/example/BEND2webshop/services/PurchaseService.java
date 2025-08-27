@@ -1,8 +1,8 @@
 package org.example.BEND2webshop.services;
 
 
+import org.example.BEND2webshop.models.AppUser;
 import org.example.BEND2webshop.models.Product;
-import org.example.BEND2webshop.models.User;
 import org.example.BEND2webshop.repositories.ProductRepository;
 import org.example.BEND2webshop.repositories.PurchaseRepository;
 import org.example.BEND2webshop.repositories.UserRepository;
@@ -30,7 +30,7 @@ public class PurchaseService {
         this.userRepository = userRepository;
     }
 
-    public void placePurchase(Long productId, User user) {
+    public void placePurchase(Long productId, AppUser appUser) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
@@ -38,7 +38,7 @@ public class PurchaseService {
         Purchase purchase = Purchase.builder()
                 .purchaseDate(LocalDateTime.now())
                 .product(product)
-                .user(user)
+                .appUser(appUser)
                 .build();
 
         purchaseRepository.save(purchase);
@@ -60,8 +60,8 @@ public class PurchaseService {
         p.getProduct().getId(),
         p.getProduct().getTitle(),
         p.getProduct().getPrice(),
-        p.getUser().getId(),
-        p.getUser().getUsername()
+        p.getAppUser().getId(),
+        p.getAppUser().getUsername()
         );
     }
 }

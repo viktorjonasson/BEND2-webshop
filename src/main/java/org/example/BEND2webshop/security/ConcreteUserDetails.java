@@ -18,7 +18,7 @@ public class ConcreteUserDetails implements UserDetails {
         return appUser.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getName())).toList();
     }
 
-    public User getUser() { return user; }
+    public AppUser getUser() { return appUser; }
 
     @Override
     public String getPassword() {

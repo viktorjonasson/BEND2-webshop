@@ -1,8 +1,6 @@
 package org.example.BEND2webshop.dtos;
 
 import lombok.*;
-import org.example.BEND2webshop.models.Product;
-import org.example.BEND2webshop.models.User;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
