@@ -37,7 +37,9 @@
 
                     <footer>
                         <p><strong>Price:</strong> $<span th:text="${#numbers.formatDecimal(product.price, 1, 2)}">0.00</span></p>
-                        <button type="button">Buy</button>
+                        <form th:action="@{/products/{productId}/buy(productId=${product.id})}" method="post" style="display: inline;">
+                            <button type="button">Buy</button>
+                        </form>
                     </footer>
                 </article>
                 <hr>
