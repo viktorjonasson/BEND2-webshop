@@ -44,7 +44,6 @@ public class PurchaseService {
         purchaseRepository.save(purchase);
     }
 
-
     //ToDo: Metod för att returnera en enskild användares ordrar.
     //Denna metod för ALLA köp, inte en specifik användares.
     public List<PurchaseDto> getAllPurchases(){
