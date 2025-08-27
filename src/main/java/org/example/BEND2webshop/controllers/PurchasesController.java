@@ -20,7 +20,7 @@ public class PurchasesController {
 
     @GetMapping
     public String getPurchases(Model model, Authentication authentication) {
-        model.addAttribute("purchases", purchaseService.getAllPurchases());
+        model.addAttribute("purchases", purchaseService.getPurchasesForCurrentUser());
         boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("admin"));
         model.addAttribute("isAdmin", isAdmin);
