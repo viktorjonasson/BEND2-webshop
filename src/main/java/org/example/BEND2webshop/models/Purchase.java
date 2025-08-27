@@ -23,7 +23,7 @@ public class Purchase {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private AppUser appUser;
 
     private Integer quantity;
 }

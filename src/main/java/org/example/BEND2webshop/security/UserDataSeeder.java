@@ -34,11 +34,11 @@ public class UserDataSeeder {
             roleRepository.save(UserRole.builder().name("customer").build());
         }
 
-        if (userRepository.findUserByUsername("Admin") == null) {
+        if (userRepository.findByUsernameIgnoreCase("Admin") == null) {
             userService.saveUser("Admin", Set.of("admin"), "password");
         }
 
-        if (userRepository.findUserByUsername("Customer") == null) {
+        if (userRepository.findByUsernameIgnoreCase("Customer") == null) {
             userService.saveUser("Customer", Set.of("customer"), "password");
         }
     }

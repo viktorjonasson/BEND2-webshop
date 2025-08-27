@@ -1,31 +1,31 @@
 package org.example.BEND2webshop.security;
 
-import org.example.BEND2webshop.models.User;
+import org.example.BEND2webshop.models.AppUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class ConcreteUserDetails implements UserDetails {
-    private User user;
+    private AppUser appUser;
 
-    public ConcreteUserDetails(User user) {
-        this.user = user;
+    public ConcreteUserDetails(AppUser appUser) {
+        this.appUser = appUser;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getName())).toList();
+        return appUser.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getName())).toList();
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return appUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return appUser.getUsername();
     }
 
     @Override
@@ -45,6 +45,6 @@ public class ConcreteUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();
+        return appUser.isEnabled();
     }
 }

@@ -1,7 +1,7 @@
 package org.example.BEND2webshop.services;
 
 
-import org.example.BEND2webshop.models.User;
+import org.example.BEND2webshop.models.AppUser;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.example.BEND2webshop.security.ConcreteUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
+        AppUser appUser = userRepository.findByUsernameIgnoreCase(username);
 
-        if (user == null) {
+        if (appUser == null) {
             throw new UsernameNotFoundException("Could not find user");
         }
 
-        return new ConcreteUserDetails(user);
+        return new ConcreteUserDetails(appUser);
     }
 
 }

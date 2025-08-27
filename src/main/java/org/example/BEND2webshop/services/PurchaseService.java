@@ -2,13 +2,12 @@ package org.example.BEND2webshop.services;
 
 
 import org.example.BEND2webshop.models.Product;
-import org.example.BEND2webshop.models.User;
+import org.example.BEND2webshop.models.AppUser;
 import org.example.BEND2webshop.repositories.ProductRepository;
 import org.example.BEND2webshop.repositories.PurchaseRepository;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.example.BEND2webshop.dtos.PurchaseDto;
@@ -35,13 +34,13 @@ public class PurchaseService {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
-        User user = userRepository.findById(userId)
+        AppUser appUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
         Purchase purchase = Purchase.builder()
                 .purchaseDate(LocalDateTime.now())
                 .product(product)
-                .user(user)
+                .appUser(appUser)
                 .build();
 
         Purchase placedPurchase = purchaseRepository.save(purchase);
