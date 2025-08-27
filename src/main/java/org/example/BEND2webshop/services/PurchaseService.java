@@ -30,7 +30,7 @@ public class PurchaseService {
         this.userRepository = userRepository;
     }
 
-    public Long placePurchase(Long productId, User user) {
+    public void placePurchase(Long productId, User user) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
@@ -41,7 +41,7 @@ public class PurchaseService {
                 .user(user)
                 .build();
 
-        return purchaseRepository.save(purchase).getId();
+        purchaseRepository.save(purchase);
     }
 
 
