@@ -10,22 +10,24 @@
 <table border="1" cellpadding="6">
     <thead>
     <tr>
-        <th>ID</th>
-        <th>Användar-ID</th>
-        <th>Produkt-ID</th>
-        <th>Antal</th>
+        <th>Order-ID</th>
         <th>Ordertid</th>
+        <th>Produkt-ID</th>
+        <th>Produktnamn</th>
+        <th>Pris</th>
+        <th>Kund-ID</th>
+        <th>Kundnamn</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="p : ${purchases}">
-        <td th:text="${p.id}">1</td>
-        <td th:text="${p.userId}">10</td>
-        <td th:text="${p.productId}">200</td>
-        <td th:text="${p.quantity}">3</td>
-        <td th:text="${#temporals.format(p.orderTime, 'yyyy-MM-dd HH:mm')}">
-            2025-08-27 14:30
-        </td>
+        <td th:text="${p.id}"></td>
+        <td th:text="${#temporals.format(p.purchaseDate, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${p.productId}"></td>
+        <td th:text="${p.productTitle}"></td>
+        <td th:text="${p.productPrice}"></td>
+        <td th:text="${p.userId}"></td>
+        <td th:text="${p.username}"></td>
     </tr>
     </tbody>
 </table>

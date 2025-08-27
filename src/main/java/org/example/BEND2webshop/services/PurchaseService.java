@@ -1,8 +1,8 @@
 package org.example.BEND2webshop.services;
 
 
-import org.example.BEND2webshop.models.Product;
 import org.example.BEND2webshop.models.AppUser;
+import org.example.BEND2webshop.models.Product;
 import org.example.BEND2webshop.repositories.ProductRepository;
 import org.example.BEND2webshop.repositories.PurchaseRepository;
 import org.example.BEND2webshop.repositories.UserRepository;
@@ -30,12 +30,10 @@ public class PurchaseService {
         this.userRepository = userRepository;
     }
 
-    public Long placePurchase(Long productId, UUID userId) {
+    public void placePurchase(Long productId, AppUser appUser) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
-        AppUser appUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
         Purchase purchase = Purchase.builder()
                 .purchaseDate(LocalDateTime.now())
@@ -43,11 +41,11 @@ public class PurchaseService {
                 .appUser(appUser)
                 .build();
 
-        Purchase placedPurchase = purchaseRepository.save(purchase);
-
-        return placedPurchase.getId();
+        purchaseRepository.save(purchase);
     }
 
+    //ToDo: Metod för att returnera en enskild användares ordrar.
+    //Denna metod för ALLA köp, inte en specifik användares.
     public List<PurchaseDto> getAllPurchases(){
         return purchaseRepository.findAll()
                 .stream()
@@ -58,8 +56,12 @@ public class PurchaseService {
     private PurchaseDto toDto(Purchase p) {
         return new PurchaseDto(
         p.getId(),
+        p.getPurchaseDate(),
         p.getProduct().getId(),
-        p.getQuantity()
+        p.getProduct().getTitle(),
+        p.getProduct().getPrice(),
+        p.getAppUser().getId(),
+        p.getAppUser().getUsername()
         );
     }
 }

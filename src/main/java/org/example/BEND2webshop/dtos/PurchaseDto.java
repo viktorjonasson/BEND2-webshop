@@ -1,26 +1,23 @@
 package org.example.BEND2webshop.dtos;
 
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PurchaseDto {
 
-    private final Long id;
-    private final Long productId;
-    private final Integer quantity;
+    private Long id;
+    private LocalDateTime purchaseDate;
 
-    public PurchaseDto(final Long id, final Long productId, final Integer quantity) {
-        this.id = id;
-        this.productId = productId;
-        this.quantity = quantity;
-    }
+    private Long productId;
+    private String productTitle;
+    private Double productPrice;
 
-    public Long getId() {
-        return id;
-    }
-
-    public Long getProductId(){
-            return productId;
-    }
-
-    public Integer getQuantity() {
-    return quantity;
-    }
+    private UUID userId;
+    private String username;
 }
