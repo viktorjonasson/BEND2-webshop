@@ -24,11 +24,12 @@ public class PlacePurchaseController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/products/{productId}/buy/")
+    @PostMapping("/products/{productId}/buy")
     public String placePurchase(@PathVariable Long productId,
                                 @AuthenticationPrincipal ConcreteUserDetails userDetails) {
         User user = userDetails.getUser();
-        Long purchaseId = purchaseService.placePurchase(productId, user);
-        return "redirect:/orders/" + purchaseId;
+        purchaseService.placePurchase(productId, user);
+        return "redirect:/purchases/"; // + user.getId();
+        //ToDo: redirect bara till den aktuella användarens ordrar (dvs gör en egen HTML som bara listar ordrar från inloggad user)
     }
 }
