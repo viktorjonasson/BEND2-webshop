@@ -15,6 +15,7 @@ import org.example.BEND2webshop.dtos.PurchaseDto;
 import org.example.BEND2webshop.models.Purchase;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -30,7 +31,7 @@ public class PurchaseService {
         this.userRepository = userRepository;
     }
 
-    public Long placePurchase(Long productId, Long userId) {
+    public Long placePurchase(Long productId, UUID userId) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
@@ -58,7 +59,7 @@ public class PurchaseService {
     private PurchaseDto toDto(Purchase p) {
         return new PurchaseDto(
         p.getId(),
-        p.getProductId(),
+        p.getProduct().getId(),
         p.getQuantity()
         );
     }
