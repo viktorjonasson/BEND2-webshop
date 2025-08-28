@@ -1,6 +1,7 @@
 package org.example.BEND2webshop.services;
 
 
+import org.example.BEND2webshop.exceptions.ProductNotFoundException;
 import org.example.BEND2webshop.models.AppUser;
 import org.example.BEND2webshop.models.Product;
 import org.example.BEND2webshop.repositories.ProductRepository;
@@ -33,7 +34,7 @@ public class PurchaseService {
     public void placePurchase(Long productId, AppUser appUser) {
 
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
+                .orElseThrow(() -> new ProductNotFoundException(productId));
 
         Purchase purchase = Purchase.builder()
                 .purchaseDate(LocalDateTime.now())
