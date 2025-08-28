@@ -22,6 +22,6 @@ public class PlacePurchaseController {
         AppUser appUser = userDetails.getUser();
         purchaseService.placePurchase(productId, appUser);
         return "redirect:/purchases/"; // + user.getId();
-        //ToDo: redirect bara till den aktuella användarens ordrar (dvs gör en egen HTML som bara listar ordrar från inloggad user)
+        //ToDo: redirect till alla ordrar
     }
 }
