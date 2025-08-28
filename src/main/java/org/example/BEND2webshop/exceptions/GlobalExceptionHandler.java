@@ -14,7 +14,6 @@ public class GlobalExceptionHandler {
         redirectAttributes.addFlashAttribute("error", "Product Unavailable");
         redirectAttributes.addFlashAttribute("message", "Sorry, this product is currently out of stock or has been discontinued.");
         return "redirect:/products";
-        //ToDo: Check how to add to current model instead of redirect to error
     }
 
 }
