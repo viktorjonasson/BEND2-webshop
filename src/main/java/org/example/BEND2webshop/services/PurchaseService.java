@@ -67,12 +67,6 @@ public class PurchaseService {
                     .map(this::toDto)
                     .toList();
         }
-
-
-//        return purchaseRepository.findAll()
-//                .stream()
-//                .map(this::toDto)
-//                .toList();
     }
 
     public void deletePurchase(Long purchaseId) {
