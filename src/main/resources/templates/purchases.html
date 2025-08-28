@@ -17,6 +17,7 @@
         <th>Pris</th>
         <th>Kund-ID</th>
         <th>Kundnamn</th>
+        <th th:if="${isAdmin}">Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,12 @@
         <td th:text="${p.productPrice}"></td>
         <td th:text="${p.userId}"></td>
         <td th:text="${p.username}"></td>
+        <td th:if="${isAdmin}">
+            <form th:action="@{/purchases/delete}" method="post">
+                <input type="hidden" name="purchaseId" th:value="${p.id}"/>
+                <button type="submit">Delete</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
