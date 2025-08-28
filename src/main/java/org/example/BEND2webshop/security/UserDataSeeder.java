@@ -1,6 +1,7 @@
 package org.example.BEND2webshop.security;
 
 import org.example.BEND2webshop.models.UserRole;
+import org.example.BEND2webshop.repositories.PurchaseRepository;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.example.BEND2webshop.repositories.UserRoleRepository;
 import org.example.BEND2webshop.services.UserService;
@@ -15,6 +16,8 @@ public class UserDataSeeder {
     UserRepository userRepository;
     UserRoleRepository roleRepository;
     UserService userService;
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
     public UserDataSeeder(UserRepository userRepository, UserRoleRepository userRoleRepository, UserService userService) {
         this.userRepository = userRepository;
@@ -23,6 +26,7 @@ public class UserDataSeeder {
     }
 
     public void Seed() {
+        purchaseRepository.deleteAll();
         userRepository.deleteAll();
 //        roleRepository.deleteAll();
 
