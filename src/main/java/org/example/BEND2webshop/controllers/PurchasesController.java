@@ -1,5 +1,11 @@
 package org.example.BEND2webshop.controllers;
 
+import jakarta.annotation.security.RolesAllowed;
+import org.example.BEND2webshop.models.AppUser;
+import org.example.BEND2webshop.security.ConcreteUserDetails;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.example.BEND2webshop.services.PurchaseService;
 import org.springframework.stereotype.Controller;
@@ -19,14 +25,14 @@ public class PurchasesController {
     }
 
     @GetMapping
-    public String getPurchases(Model model, Authentication authentication) {
-        model.addAttribute("purchases", purchaseService.getPurchasesForCurrentUser());
-        boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("admin"));
-        model.addAttribute("isAdmin", isAdmin);
+    public String getPurchases(Model model, @AuthenticationPrincipal ConcreteUserDetails userDetails) {
+        model.addAttribute("purchases", purchaseService.getPurchasesForCurrentUser(userDetails));
+        model.addAttribute("isAdmin", userDetails.getAuthorities().stream()
+                .anyMatch(role -> role.getAuthority().equals("admin")));
         return "purchases";
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/delete")
     public String deletePurchase(@RequestParam Long purchaseId) {
         purchaseService.deletePurchase(purchaseId);

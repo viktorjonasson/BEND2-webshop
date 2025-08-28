@@ -21,7 +21,6 @@ public class PlacePurchaseController {
                                 @AuthenticationPrincipal ConcreteUserDetails userDetails) {
         AppUser appUser = userDetails.getUser();
         purchaseService.placePurchase(productId, appUser);
-        return "redirect:/purchases/"; // + user.getId();
-        //ToDo: redirect till alla ordrar
+        return "redirect:/purchases"; // + user.getId();
     }
 }
