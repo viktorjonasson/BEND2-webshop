@@ -28,28 +28,34 @@ public class ProductImportService {
 
     @Transactional
     public void fetchAndSaveProducts() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        URL url = new URL("https://fakestoreapi.com/products");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.connect();
 
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = in.readLine()) != null) {
-                sb.append(line);
+
+        if (productRepository.findAll().isEmpty()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            URL url = new URL("https://fakestoreapi.com/products");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.connect();
+
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                ProductDto[] productDtos = objectMapper.readValue(sb.toString(), ProductDto[].class);
+                List<ProductDto> productDtoList = Arrays.asList(productDtos);
+                List<Product> products = productDtoList.stream().map(this::convertToProduct).toList();
+
+                productRepository.saveAll(products);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            ProductDto[] productDtos = objectMapper.readValue(sb.toString(), ProductDto[].class);
-            List<ProductDto> productDtoList = Arrays.asList(productDtos);
-            List<Product> products = productDtoList.stream().map(this::convertToProduct).toList();
-
-            productRepository.saveAll(products);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+
 
     }
     private Product convertToProduct(ProductDto dto) {

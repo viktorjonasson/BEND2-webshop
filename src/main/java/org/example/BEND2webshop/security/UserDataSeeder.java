@@ -12,12 +12,9 @@ import java.util.Set;
 @Service
 public class UserDataSeeder {
 
-    @Autowired
     UserRepository userRepository;
     UserRoleRepository roleRepository;
     UserService userService;
-    @Autowired
-    private PurchaseRepository purchaseRepository;
 
     public UserDataSeeder(UserRepository userRepository, UserRoleRepository userRoleRepository, UserService userService) {
         this.userRepository = userRepository;
@@ -26,10 +23,6 @@ public class UserDataSeeder {
     }
 
     public void Seed() {
-        purchaseRepository.deleteAll();
-        userRepository.deleteAll();
-//        roleRepository.deleteAll();
-
         if (roleRepository.findByName("admin") == null) {
             roleRepository.save(UserRole.builder().name("admin").build());
         }
@@ -42,8 +35,8 @@ public class UserDataSeeder {
             userService.saveUser("Admin", Set.of("admin"), "password");
         }
 
-        if (userRepository.findByUsernameIgnoreCase("Customer") == null) {
-            userService.saveUser("Customer", Set.of("customer"), "password");
+        if (userRepository.findByUsernameIgnoreCase("Yahya") == null) {
+            userService.saveUser("Yahya", Set.of("customer"), "password");
         }
     }
 }
