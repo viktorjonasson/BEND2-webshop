@@ -1,0 +1,42 @@
+package org.example.BEND2webshop.security;
+
+import org.example.BEND2webshop.models.UserRole;
+import org.example.BEND2webshop.repositories.PurchaseRepository;
+import org.example.BEND2webshop.repositories.UserRepository;
+import org.example.BEND2webshop.repositories.UserRoleRepository;
+import org.example.BEND2webshop.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Set;
+
+@Service
+public class UserDataSeeder {
+
+    UserRepository userRepository;
+    UserRoleRepository roleRepository;
+    UserService userService;
+
+    public UserDataSeeder(UserRepository userRepository, UserRoleRepository userRoleRepository, UserService userService) {
+        this.userRepository = userRepository;
+        this.roleRepository = userRoleRepository;
+        this.userService = userService;
+    }
+
+    public void Seed() {
+        if (roleRepository.findByName("admin") == null) {
+            roleRepository.save(UserRole.builder().name("admin").build());
+        }
+
+        if (roleRepository.findByName("customer") == null) {
+            roleRepository.save(UserRole.builder().name("customer").build());
+        }
+
+        if (userRepository.findByUsernameIgnoreCase("Admin") == null) {
+            userService.saveUser("Admin", Set.of("admin"), "password");
+        }
+
+        if (userRepository.findByUsernameIgnoreCase("Yahya") == null) {
+            userService.saveUser("Yahya", Set.of("customer"), "password");
+        }
+    }
+}
