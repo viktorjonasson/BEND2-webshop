@@ -1,24 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div th:replace="~{fragments/head :: head}"></div>
     <title>Products</title>
 </head>
 <body>
-    <div>
-        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-        <a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>
-
-        <a th:href="@{/products}">Products</a>
-        <a th:href="@{/register}">Register</a>
-        <a th:href="@{/home}">Home</a>
-        <a th:href="@{/purchases}">Purchases</a>
-    </div>
-
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
     <main>
         <header>
             <h1>Products</h1>
