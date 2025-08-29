@@ -1,49 +1,57 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>
-
-<a th:href="@{/products}">Products</a>
-<a th:href="@{/register}">Register</a>
-<a th:href="@{/home}">Home</a>
-<a th:href="@{/purchases}">Purchases</a>
-<h1>Register Account</h1>
-
-
-<div th:if="${feedback}" th:text="${feedback}"></div>
-
-
-<div sec:authorize="hasAuthority('admin')">
-    <form th:action="@{/register-admin}" method="post">
-        <div><label> User Name: <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><label> Role: </label>
-            <select name="role">
-                <option value="Admin">Administrator</option>
-                <option value="Customer">Customer</option>
-            </select>
-        </div>
-        <div><input type="submit" value="Create Account"/></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div th:replace="~{fragments/head :: head}"></div>
+    <title>Register</title>
+</head>
+<body>
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
     </form>
-</div>
+    <a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>
 
-<div sec:authorize="isAnonymous()">
-    <form th:action="@{/register}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><label> Role: </label>
-            <select name="role">
-                <option selected value="Customer">Customer</option>
-            </select>
-        </div>
-        <div><input type="submit" value="Create Account"/></div>
-    </form>
-</div>
+    <a th:href="@{/products}">Products</a>
+    <a th:href="@{/register}">Register</a>
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/purchases}">Purchases</a>
+    <h1>Register Account</h1>
 
-<div sec:authorize="hasAuthority('customer')">
-    You are already signed in.
-</div>
+
+    <div th:if="${feedback}" th:text="${feedback}"></div>
+
+
+    <div sec:authorize="hasAuthority('admin')">
+        <form th:action="@{/register-admin}" method="post">
+            <div><label> User Name: <input type="text" name="username"/> </label></div>
+            <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><label> Role: </label>
+                <select name="role">
+                    <option value="Admin">Administrator</option>
+                    <option value="Customer">Customer</option>
+                </select>
+            </div>
+            <div><input type="submit" value="Create Account"/></div>
+        </form>
+    </div>
+
+    <div sec:authorize="isAnonymous()">
+        <form th:action="@{/register}" method="post">
+            <div><label> User Name : <input type="text" name="username"/> </label></div>
+            <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><label> Role: </label>
+                <select name="role">
+                    <option selected value="Customer">Customer</option>
+                </select>
+            </div>
+            <div><input type="submit" value="Create Account"/></div>
+        </form>
+    </div>
+
+    <div sec:authorize="hasAuthority('customer')">
+        You are already signed in.
+    </div>
 </body>
 </html>
