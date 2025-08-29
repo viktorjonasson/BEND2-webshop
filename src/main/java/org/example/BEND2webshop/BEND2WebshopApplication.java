@@ -1,6 +1,8 @@
 package org.example.BEND2webshop;
 
 import org.example.BEND2webshop.security.UserDataSeeder;
+import org.example.BEND2webshop.services.ProductImportService;
+import org.example.BEND2webshop.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +14,10 @@ public class BEND2WebshopApplication {
 
     @Autowired
     private UserDataSeeder userDataSeeder;
+    @Autowired
+    private ProductImportService productImportService;
+    @Autowired
+    private PurchaseService purchaseService;
 
     public static void main(String[] args) {
 
@@ -23,7 +29,8 @@ public class BEND2WebshopApplication {
     CommandLineRunner commandLineRunner() {
         return args -> {
             userDataSeeder.Seed();
-//            productImportService.fetchAndSaveProducts();
+            productImportService.fetchAndSaveProducts();
+            purchaseService.SeedPurchases();
         };
     }
 }
