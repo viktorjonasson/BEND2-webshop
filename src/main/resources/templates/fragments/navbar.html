@@ -10,7 +10,7 @@
         <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
         </form>
-        <a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>
+        <button sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</button>
     </div>
 </nav>
 
