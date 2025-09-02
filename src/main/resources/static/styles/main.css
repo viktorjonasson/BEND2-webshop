@@ -12,7 +12,7 @@
     --error-color: #ffdbdb;
     --error-border: 0.1rem solid #e67b7b;
     --info-color: #e9f2ff;
-    --info-border: 0.1rem solid var(--primary-color);
+    --info-border: 0.1rem solid #77a8ed;
     --wrapping-border: 0.1rem solid var(--medium-gray);
     --standard-radius: 1.5rem;
     --sharp-radius: 0.5rem;
