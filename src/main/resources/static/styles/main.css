@@ -7,8 +7,15 @@
     --accent-background-color: #f8f8f8;
     --heading-color: #333;
     --text-color: #666;
+    --warning-color: #fff7be;
+    --warning-border: 0.1rem solid #e8c84c;
+    --error-color: #ffdbdb;
+    --error-border: 0.1rem solid #e67b7b;
+    --info-color: #e9f2ff;
+    --info-border: 0.1rem solid var(--primary-color);
     --wrapping-border: 0.1rem solid var(--medium-gray);
     --standard-radius: 1.5rem;
+    --sharp-radius: 0.5rem;
 }
 
 html,
@@ -73,6 +80,28 @@ button:hover, .link-button:hover {
 
 a:hover {
     opacity: 0.6;
+}
+
+.info-message {
+    display: block;
+    width: fit-content;
+    padding: 0.1rem 0.75rem;
+    border-radius: var(--sharp-radius);
+}
+
+.warning {
+    background-color: var(--warning-color);
+    border: var(--warning-border);
+}
+
+.error {
+    background-color: var(--error-color);
+    border: var(--error-border);
+}
+
+.info {
+    background-color: var(--info-color);
+    border: var(--info-border);
 }
 
 /*Header*/
@@ -179,7 +208,7 @@ a:hover {
     max-width: max-content;
     background-color: var(--accent-background-color);
     border: var(--wrapping-border);
-    border-radius: var(--standard-radius);
+    border-radius: var(--sharp-radius);
 }
 
 /*Order List*/
@@ -187,7 +216,7 @@ a:hover {
     display: grid;
     grid-template-columns: max-content max-content 1fr max-content max-content max-content;
     border: var(--wrapping-border);
-    border-radius: var(--standard-radius);
+    border-radius: var(--sharp-radius);
     overflow: auto;
 }
 

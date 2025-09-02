@@ -16,12 +16,19 @@
             <h1>Sign In</h1>
         </header>
 
-        <div th:if="${param.logout}">
-            <p>You have been signed out.</p>
+        <div th:if="${param.logout}" class="info-message info">
+            <p>You've been signed out.</p>
+        </div>
+
+        <div th:if="${param.error}" class="info-message error">
+            <p>Invalid username or password.</p>
         </div>
 
         <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-            <p>You're already signed in.</p>
+            <div class="info-message info">
+                <p>You're already signed in.</p>
+            </div>
+            <div class="spacer-small"></div>
             <button type="submit">Sign Out</button>
         </form>
 
@@ -30,10 +37,6 @@
             <label> Password: <input type="password" name="password"/> </label>
             <button type="submit">Sign In</button>
         </form>
-
-        <div th:if="${param.error}">
-            <p>Invalid username or password.</p>
-        </div>
     </main>
 </body>
 </html>

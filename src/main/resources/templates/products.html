@@ -26,6 +26,10 @@
             <p>There are currently no products in our inventory.</p>
         </section>
 
+        <section sec:authorize="isAnonymous()" class="info-message warning">
+            <p>To buy products you need to <a th:href="@{/login}">log in</a> or <a th:href="@{/register}">create an account</a>.</p>
+        </section>
+
         <section th:unless="${#lists.isEmpty(products)}" class="product-list">
             <article th:each="product : ${products}" class="product-card">
                 <div class="product-card-image">
@@ -48,7 +52,7 @@
                     </div>
                     <footer class="product-card-footer">
                         <p>$<span th:text="${#numbers.formatDecimal(product.price, 1, 2)}">0.00</span></p>
-                        <form th:action="@{/products/{productId}/buy(productId=${product.id})}" method="post" style="display: inline;">
+                        <form sec:authorize="isAuthenticated()" th:action="@{/products/{productId}/buy(productId=${product.id})}" method="post">
                             <button type="submit">Buy</button>
                         </form>
                     </footer>

@@ -15,6 +15,15 @@
         <header>
             <h1>Register Account</h1>
         </header>
+
+        <div th:if="${feedback}" class="info-message error">
+            <p th:text="${feedback}"></p>
+        </div>
+
+        <div sec:authorize="hasAuthority('customer')" class="info-message info">
+            <p>You're already signed in.</p>
+        </div>
+
         <div sec:authorize="hasAuthority('admin')">
             <form th:action="@{/register-admin}" method="post" class="form-wrapper">
                 <label> Username: <input type="text" name="username"/> </label>
@@ -40,12 +49,6 @@
                 </div>
                 <button type="submit" value="Create Account">Create Account</button>
             </form>
-        </div>
-
-        <div th:if="${feedback}" th:text="${feedback}"></div>
-
-        <div sec:authorize="hasAuthority('customer')">
-            <p>You are already signed in.</p>
         </div>
     </main>
 </body>
