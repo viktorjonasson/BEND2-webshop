@@ -17,7 +17,7 @@
         </header>
 
         <div th:if="${param.logout}">
-            <p>You have been logged out.</p>
+            <p>You have been signed out.</p>
         </div>
 
         <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
