@@ -15,11 +15,6 @@
         <header>
             <h1>Register Account</h1>
         </header>
-        <!--<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-        <a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>-->
-
         <div sec:authorize="hasAuthority('admin')">
             <form th:action="@{/register-admin}" method="post" class="form-wrapper">
                 <label> Username: <input type="text" name="username"/> </label>
@@ -50,7 +45,7 @@
         <div th:if="${feedback}" th:text="${feedback}"></div>
 
         <div sec:authorize="hasAuthority('customer')">
-            You are already signed in.
+            <p>You are already signed in.</p>
         </div>
     </main>
 </body>

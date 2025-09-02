@@ -1,14 +1,14 @@
  <nav th:fragment="navbar" class="navbar-wrapper"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <div class="navbar-menu">
-        <a th:href="@{/products}">Products</a>
-        <a th:href="@{/register}">Register</a>
         <a th:href="@{/home}">Home</a>
+        <a th:href="@{/products}">Products</a>
         <a th:href="@{/purchases}">Purchases</a>
+        <a th:href="@{/register}">Register</a>
     </div>
     <div class="navbar-login">
         <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-            <button type="submit" value="Sign Out">Sign Out</button>
+            <button type="submit">Sign Out</button>
         </form>
         <a sec:authorize="isAnonymous()" th:href="@{/login}" class="link-button">Sign In</a>
     </div>

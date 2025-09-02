@@ -14,15 +14,13 @@
     <main>
         <header>
             <h1>Welcome to MockShop!</h1>
-            <p>Browse our products or see your purchases.</p>
             <div class="flex-row-util">
                 <a th:href="@{/products}" class="link-button">Browse Products</a>
                 <a th:href="@{/purchases}" class="link-button">My Purchases</a>
             </div>
             <div class="spacer-small"></div>
-            <p class="text-small">To buy products you need to <a th:href="@{/login}">log in</a> or <a th:href="@{/register}">create an account</a>.</p>
+            <p sec:authorize="isAnonymous()" class="text-small">To buy products you need to <a th:href="@{/login}">log in</a> or <a th:href="@{/register}">create an account</a>.</p>
         </header>
-
     </main>
 </body>
 </html>

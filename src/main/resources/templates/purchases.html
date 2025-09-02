@@ -21,14 +21,14 @@
                 <div class="order-cell">Date</div>
                 <div class="order-cell">Product Title</div>
                 <div class="order-cell">Price</div>
-                <div class="order-cell">Customer Name</div>
-                <div th:if="${isAdmin}" class="order-cell">Delete</div>
+                <div class="order-cell">Customer</div>
+                <div th:if="${isAdmin}" class="order-cell"></div>
             </div>
             <div th:each="p : ${purchases}" class="order-row">
                 <div class="order-cell" th:text="${p.id}"></div>
                 <div class="order-cell" th:text="${#temporals.format(p.purchaseDate, 'yyyy-MM-dd HH:mm')}"></div>
                 <div class="order-cell" th:text="${p.productTitle}"></div>
-                <div class="order-cell" th:text="${p.productPrice}"></div>
+                <div class="order-cell">$<span th:text="${#numbers.formatDecimal(p.productPrice, 1, 2)}">0.00</span></div>
                 <div class="order-cell" th:text="${p.username}"></div>
                 <div th:if="${isAdmin}" class="order-cell">
                     <form th:action="@{/purchases/delete}" method="post">

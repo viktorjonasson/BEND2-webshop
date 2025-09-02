@@ -17,7 +17,7 @@
         </header>
 
         <div th:if="${param.logout}">
-            You have been logged out.
+            <p>You have been logged out.</p>
         </div>
 
         <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
@@ -32,7 +32,7 @@
         </form>
 
         <div th:if="${param.error}">
-            Invalid username and password.
+            <p>Invalid username or password.</p>
         </div>
     </main>
 </body>
