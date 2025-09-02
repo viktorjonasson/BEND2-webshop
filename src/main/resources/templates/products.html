@@ -26,33 +26,34 @@
             <p>There are currently no products in our inventory.</p>
         </section>
 
-        <section th:unless="${#lists.isEmpty(products)}">
-            <div th:each="product : ${products}">
-                <article>
+        <section th:unless="${#lists.isEmpty(products)}" class="product-list">
+            <article th:each="product : ${products}" class="product-card">
+                <div class="product-card-image">
                     <img th:src="${product.image}"
                          th:alt="${product.title}">
+                </div>
+                <div class="product-card-body">
+                    <div class="product-card-details">
+                        <header>
+                            <h2 th:text="${product.title}">Product Title</h2>
+                            <p class="text-pill"><span th:text="${product.category}">Category</span></p>
+                        </header>
 
-                    <header>
-                        <h2 th:text="${product.title}">Product Title</h2>
-                        <p><strong>Category:</strong> <span th:text="${product.category}">Category</span></p>
-                    </header>
+                        <p th:text="${product.description}">Product description...</p>
 
-                    <p th:text="${product.description}">Product description...</p>
-
-                    <div th:if="${product.rating}">
-                        <p><strong>Rating:</strong> <span th:text="${product.rating.rate}"></span>/5
-                           (<span th:text="${product.rating.count}"></span> reviews)</p>
+                        <div th:if="${product.rating}">
+                            <p><strong>Rating:</strong> <span th:text="${product.rating.rate}"></span>/5
+                               (<span th:text="${product.rating.count}"></span> reviews)</p>
+                        </div>
                     </div>
-
-                    <footer>
-                        <p><strong>Price:</strong> $<span th:text="${#numbers.formatDecimal(product.price, 1, 2)}">0.00</span></p>
+                    <footer class="product-card-footer">
+                        <p>$<span th:text="${#numbers.formatDecimal(product.price, 1, 2)}">0.00</span></p>
                         <form th:action="@{/products/{productId}/buy(productId=${product.id})}" method="post" style="display: inline;">
                             <button type="submit">Buy</button>
                         </form>
                     </footer>
-                </article>
-                <hr>
-            </div>
+                </div>
+            </article>
         </section>
     </main>
 </body>
