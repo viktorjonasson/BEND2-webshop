@@ -8,26 +8,32 @@
     <title>Login</title>
 </head>
 <body>
-    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
-    <a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+    <main>
+        <header>
+            <h1>Sign In</h1>
+        </header>
 
-    <a th:href="@{/products}">Products</a>
-    <a th:href="@{/register}">Register</a>
-    <a th:href="@{/home}">Home</a>
-    <a th:href="@{/purchases}">Purchases</a>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
 
-    <div th:if="${param.error}">
-        Invalid username and password.
-    </div>
-    <div th:if="${param.logout}">
-        You have been logged out.
-    </div>
-    <form th:action="@{/login}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
-    </form>
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+            <p>You're already signed in.</p>
+            <button type="submit">Sign Out</button>
+        </form>
+
+        <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post" class="form-wrapper">
+            <label> Username: <input type="text" name="username"/> </label>
+            <label> Password: <input type="password" name="password"/> </label>
+            <button type="submit">Sign In</button>
+        </form>
+
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+    </main>
 </body>
 </html>

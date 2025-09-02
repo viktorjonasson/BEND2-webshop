@@ -8,9 +8,9 @@
     </div>
     <div class="navbar-login">
         <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
+            <button type="submit" value="Sign Out">Sign Out</button>
         </form>
-        <button sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</button>
+        <a sec:authorize="isAnonymous()" th:href="@{/login}" class="link-button">Sign In</a>
     </div>
 </nav>
 

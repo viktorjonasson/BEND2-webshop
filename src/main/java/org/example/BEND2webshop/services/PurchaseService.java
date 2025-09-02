@@ -32,6 +32,23 @@ public class PurchaseService {
         this.userRepository = userRepository;
     }
 
+    public void SeedPurchases() {
+        if (purchaseRepository.findAll().isEmpty()) {
+
+            AppUser customer = userRepository.findByUsernameIgnoreCase("Yahya");
+
+            if (customer != null) {
+                placePurchase(productRepository.findAll().get(0).getId(), customer);
+                placePurchase(productRepository.findAll().get(0).getId(), customer);
+                placePurchase(productRepository.findAll().get(0).getId(), customer);
+                placePurchase(productRepository.findAll().get(0).getId(), customer);
+                placePurchase(productRepository.findAll().get(1).getId(), customer);
+                placePurchase(productRepository.findAll().get(2).getId(), customer);
+                placePurchase(productRepository.findAll().get(3).getId(), customer);
+            }
+        }
+    }
+
     public void placePurchase(Long productId, AppUser appUser) {
 
         Product product = productRepository.findById(productId)
