@@ -1,15 +1,29 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div th:replace="~{fragments/head :: head}"></div>
+    <title>Login</title>
+</head>
+<body>
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+    <main>
+        <header>
+            <h1>Welcome to MockShop!</h1>
+            <p>Browse our products or see your purchases.</p>
+            <div class="flex-row-util">
+                <a th:href="@{/products}" class="link-button">Browse Products</a>
+                <a th:href="@{/purchases}" class="link-button">My Purchases</a>
+            </div>
+            <div class="spacer-small"></div>
+            <p class="text-small">To buy products you need to <a th:href="@{/login}">log in</a> or <a th:href="@{/register}">create an account</a>.</p>
+        </header>
 
-<a th:href="@{/products}">Products</a>
-<a th:href="@{/register}">Register</a>
-<a th:href="@{/home}">Home</a>
-<a th:href="@{/purchases}">Purchases</a>
-<h1>Home</h1>
-<p>Welcome</p>
+    </main>
+</body>
 </html>
 
