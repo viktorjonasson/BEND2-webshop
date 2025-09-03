@@ -1,43 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="sv">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Alla ordrar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div th:replace="~{fragments/head :: head}"></div>
+    <title>Orders</title>
 </head>
 <body>
-<h1>Alla ordrar</h1>
-
-<table border="1" cellpadding="6">
-    <thead>
-    <tr>
-        <th>Order-ID</th>
-        <th>Ordertid</th>
-        <th>Produkt-ID</th>
-        <th>Produktnamn</th>
-        <th>Pris</th>
-        <th>Kund-ID</th>
-        <th>Kundnamn</th>
-        <th th:if="${isAdmin}">Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="p : ${purchases}">
-        <td th:text="${p.id}"></td>
-        <td th:text="${#temporals.format(p.purchaseDate, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${p.productId}"></td>
-        <td th:text="${p.productTitle}"></td>
-        <td th:text="${p.productPrice}"></td>
-        <td th:text="${p.userId}"></td>
-        <td th:text="${p.username}"></td>
-        <td th:if="${isAdmin}">
-            <form th:action="@{/purchases/delete}" method="post">
-                <input type="hidden" name="purchaseId" th:value="${p.id}"/>
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+    <main>
+        <header>
+            <h1>Placed Orders</h1>
+        </header>
+        <div class="orders-wrapper">
+            <div class="order-row header-row">
+                <div class="order-cell">Order ID</div>
+                <div class="order-cell">Date</div>
+                <div class="order-cell">Product Title</div>
+                <div class="order-cell">Price</div>
+                <div class="order-cell">Customer</div>
+                <div th:if="${isAdmin}" class="order-cell"></div>
+            </div>
+            <div th:each="p : ${purchases}" class="order-row">
+                <div class="order-cell" th:text="${p.id}"></div>
+                <div class="order-cell" th:text="${#temporals.format(p.purchaseDate, 'yyyy-MM-dd HH:mm')}"></div>
+                <div class="order-cell" th:text="${p.productTitle}"></div>
+                <div class="order-cell">$<span th:text="${#numbers.formatDecimal(p.productPrice, 1, 2)}">0.00</span></div>
+                <div class="order-cell" th:text="${p.username}"></div>
+                <div th:if="${isAdmin}" class="order-cell">
+                    <form th:action="@{/purchases/delete}" method="post">
+                        <input type="hidden" name="purchaseId" th:value="${p.id}"/>
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

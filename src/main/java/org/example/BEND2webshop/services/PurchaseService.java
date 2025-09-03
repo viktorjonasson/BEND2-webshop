@@ -69,11 +69,13 @@ public class PurchaseService {
             return purchaseRepository.findAll()
                     .stream()
                     .map(this::toDto)
+                    .sorted((p1, p2) -> p2.getPurchaseDate().compareTo(p1.getPurchaseDate()))
                     .toList();
         } else {
             return purchaseRepository.findByAppUser(userDetails.getUser())
                     .stream()
                     .map(this::toDto)
+                    .sorted((p1, p2) -> p2.getPurchaseDate().compareTo(p1.getPurchaseDate()))
                     .toList();
         }
     }

@@ -51,7 +51,7 @@ public class RegisterController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String invalidArguments(Model model) {
-        model.addAttribute("feedback", "invalid input, username and password must be between 2-30 characters.");
+        model.addAttribute("feedback", "Invalid input, username and password must be between 2-30 characters.");
         return "register";
     }
 }

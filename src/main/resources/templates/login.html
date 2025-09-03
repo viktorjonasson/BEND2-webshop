@@ -1,24 +1,42 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<a sec:authorize="isAnonymous()" th:href="@{/login}">Sign in</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div th:replace="~{fragments/head :: head}"></div>
+    <title>Login</title>
+</head>
+<body>
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+    <main>
+        <header>
+            <h1>Sign In</h1>
+        </header>
 
-<a th:href="@{/products}">Products</a>
-<a th:href="@{/register}">Register</a>
-<a th:href="@{/home}">Home</a>
-<a th:href="@{/purchases}">Purchases</a>
+        <div th:if="${param.logout}" class="info-message info">
+            <p>You've been signed out.</p>
+        </div>
 
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+        <div th:if="${param.error}" class="info-message error">
+            <p>Invalid username or password.</p>
+        </div>
+
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+            <div class="info-message info">
+                <p>You're already signed in.</p>
+            </div>
+            <div class="spacer-small"></div>
+            <button type="submit">Sign Out</button>
+        </form>
+
+        <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post" class="form-wrapper">
+            <label> Username: <input type="text" name="username"/> </label>
+            <label> Password: <input type="password" name="password"/> </label>
+            <button type="submit">Sign In</button>
+        </form>
+    </main>
+</body>
 </html>
