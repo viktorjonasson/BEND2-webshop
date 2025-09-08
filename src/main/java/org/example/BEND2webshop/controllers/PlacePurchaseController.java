@@ -1,5 +1,6 @@
 package org.example.BEND2webshop.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.BEND2webshop.security.ConcreteUserDetails;
 import org.example.BEND2webshop.models.AppUser;
 import org.example.BEND2webshop.services.PurchaseService;
@@ -19,8 +20,9 @@ public class PlacePurchaseController {
     @PostMapping("/products/{productId}/buy")
     public String placePurchase(@PathVariable Long productId,
                                 @AuthenticationPrincipal ConcreteUserDetails userDetails) {
+
         AppUser appUser = userDetails.getUser();
         purchaseService.placePurchase(productId, appUser);
-        return "redirect:/purchases"; // + user.getId();
+        return "redirect:/purchases";
     }
 }

@@ -24,7 +24,7 @@ public class BEND2WebshopApplication {
         SpringApplication.run(BEND2WebshopApplication.class, args);
     }
 
-//    Boostrap database with users
+    //    Boostrap database with users
     @Bean
     CommandLineRunner commandLineRunner() {
         return args -> {
