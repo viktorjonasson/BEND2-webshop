@@ -23,6 +23,6 @@ public class AppUser {
     private String password;
     private boolean enabled;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRole> roles;
 }

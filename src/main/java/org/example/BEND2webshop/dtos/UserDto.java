@@ -11,6 +11,6 @@ public class UserDto {
     @Length(min=2, max=30)
     private String username, password;
 
-    @Pattern(regexp = "Admin|Customer")
+    @Pattern(regexp = "admin|customer")
     private String role;
 }
