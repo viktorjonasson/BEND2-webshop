@@ -1,12 +1,13 @@
 package org.example.BEND2webshop.services;
 
 import org.example.BEND2webshop.models.AppUser;
+import org.example.BEND2webshop.models.UserRole;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.example.BEND2webshop.repositories.UserRoleRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
