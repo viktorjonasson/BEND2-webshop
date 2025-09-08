@@ -1,6 +1,7 @@
 package org.example.BEND2webshop.controllers;
 
 import jakarta.validation.Valid;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.example.BEND2webshop.dtos.UserDto;
 import org.example.BEND2webshop.models.AppUser;
 import org.example.BEND2webshop.services.UserService;
@@ -30,6 +31,10 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute @Valid UserDto user, Model model) {
+        if (user.getRole().contains("admin")) {
+            model.addAttribute("feedback", "not permitted");
+            return "register";
+        }
         userService.saveUser(user.getUsername(), Set.of(user.getRole()), user.getPassword());
         model.addAttribute("feedback", "success");
         return "register";
