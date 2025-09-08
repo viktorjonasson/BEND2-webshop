@@ -26,19 +26,15 @@ public class UserService {
             throw new IllegalArgumentException("username exists");
         }
 
-        List<UserRole> userRoles =
-                userRoleRepository.findAll().stream().filter(
-                        r -> roles.contains(r.getName())
-                ).toList();
-
-
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         userRepository.save(
                 AppUser.builder()
                         .username(username)
                         .password(encoder.encode(password))
                         .roles(
-                               userRoles
+                                userRoleRepository.findAll().stream().filter(
+                                        r -> roles.contains(r.getName())
+                                ).toList()
                         )
                         .enabled(true)
                         .build()
