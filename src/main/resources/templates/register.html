@@ -16,9 +16,7 @@
             <h1>Register Account</h1>
         </header>
 
-        <div th:if="${feedback}" class="info-message error">
-            <p th:text="${feedback}"></p>
-        </div>
+        <div th:replace="~{fragments/feedback :: feedback}"></div>
 
         <div sec:authorize="hasAuthority('customer')" class="info-message info">
             <p>You're already signed in.</p>
