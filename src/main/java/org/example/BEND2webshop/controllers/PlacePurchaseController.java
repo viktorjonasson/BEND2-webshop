@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class PlacePurchaseController {
@@ -19,10 +20,12 @@ public class PlacePurchaseController {
 
     @PostMapping("/products/{productId}/buy")
     public String placePurchase(@PathVariable Long productId,
-                                @AuthenticationPrincipal ConcreteUserDetails userDetails) {
-
+                                @AuthenticationPrincipal ConcreteUserDetails userDetails,
+                                RedirectAttributes redirectAttributes) {
         AppUser appUser = userDetails.getUser();
         purchaseService.placePurchase(productId, appUser);
+        redirectAttributes.addFlashAttribute("feedbackContent", "Order placed. Thank you for your purchase!");
+        redirectAttributes.addFlashAttribute("feedbackType", "success");
         return "redirect:/purchases";
     }
 }

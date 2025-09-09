@@ -1,0 +1,3 @@
+<div th:fragment="feedback" th:if="${feedbackContent}" class="info-message" th:classappend="${feedbackType}">
+    <p th:text="${feedbackContent}"></p>
+</div>

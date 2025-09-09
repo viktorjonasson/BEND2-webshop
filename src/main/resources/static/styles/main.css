@@ -13,6 +13,8 @@
     --error-border: 0.1rem solid #e67b7b;
     --info-color: #e9f2ff;
     --info-border: 0.1rem solid #77a8ed;
+    --success-color: #eaffe9;
+    --success-border: 0.1rem solid #75d57d;
     --wrapping-border: 0.1rem solid var(--medium-gray);
     --standard-radius: 1.5rem;
     --sharp-radius: 0.5rem;
@@ -102,6 +104,11 @@ a:hover {
 .info {
     background-color: var(--info-color);
     border: var(--info-border);
+}
+
+.success {
+    background-color: var(--success-color);
+    border: var(--success-border);
 }
 
 /*Header*/
@@ -214,6 +221,7 @@ a:hover {
 /*Order List*/
 .orders-wrapper {
     display: grid;
+    margin: 2rem 0;
     grid-template-columns: max-content max-content 1fr max-content max-content max-content;
     border: var(--wrapping-border);
     border-radius: var(--sharp-radius);
