@@ -1,14 +1,15 @@
 name: ci.yml
-on: workflow_dispatch
-#  push:
-#    branches:
-#      - master
-#      - develop
-#
-#  pull_request:
-#    branches:
-#      - master
-#      - develop
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+  pull_request:
+    branches:
+      - master
+      - develop
 
 jobs:
   build:
