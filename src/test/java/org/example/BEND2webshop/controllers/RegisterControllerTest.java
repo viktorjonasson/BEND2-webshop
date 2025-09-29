@@ -31,7 +31,7 @@ class RegisterControllerTest {
 //        delete db data
     }
 
-    @Test
-    void register() {
-    }
+//    @Test
+//    void register() {
+//    }
 }
