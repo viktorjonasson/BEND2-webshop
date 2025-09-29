@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Set;
 
@@ -30,33 +31,38 @@ public class RegisterController {
 
 
     @PostMapping("/register")
-    public String register(@ModelAttribute @Valid UserDto user, Model model) {
+    public String register(@ModelAttribute @Valid UserDto user, RedirectAttributes redirectAttributes, Model model) {
         if (user.getRole().contains("admin")) {
-            model.addAttribute("feedback", "not permitted");
+            model.addAttribute("feedbackContent", "Not permitted.");
+            model.addAttribute("feedbackType", "error");
             return "register";
         }
         userService.saveUser(user.getUsername(), Set.of(user.getRole()), user.getPassword());
-        model.addAttribute("feedback", "success");
-        return "register";
+        redirectAttributes.addFlashAttribute("feedbackContent", "Account created. You can now sign in.");
+        redirectAttributes.addFlashAttribute("feedbackType", "success");
+        return "redirect:register";
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/register-admin")
-    public String registerAdmin(@ModelAttribute @Valid UserDto user, Model model) {
+    public String registerAdmin(@ModelAttribute @Valid UserDto user, RedirectAttributes redirectAttributes) {
         userService.saveUser(user.getUsername(), Set.of(user.getRole()), user.getPassword());
-        model.addAttribute("feedback", "success");
+        redirectAttributes.addFlashAttribute("feedbackContent", "Account created.");
+        redirectAttributes.addFlashAttribute("feedbackType", "success");
         return "redirect:register";
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public String illegalArgument(Model model, IllegalArgumentException exception) {
-        model.addAttribute("feedback", exception.getMessage());
+        model.addAttribute("feedbackContent", exception.getMessage());
+        model.addAttribute("feedbackType", "error");
         return "register";
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String invalidArguments(Model model) {
-        model.addAttribute("feedback", "Invalid input, username and password must be between 2-30 characters.");
+        model.addAttribute("feedbackContent", "Invalid input, username and password must be between 2-30 characters.");
+        model.addAttribute("feedbackType", "error");
         return "register";
     }
 }
