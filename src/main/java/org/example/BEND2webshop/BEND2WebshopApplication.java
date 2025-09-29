@@ -25,12 +25,12 @@ public class BEND2WebshopApplication {
     }
 
     //    Boostrap database with users
-    @Bean
-    CommandLineRunner commandLineRunner() {
-        return args -> {
-            userDataSeeder.Seed();
-            productImportService.fetchAndSaveProducts();
-            purchaseService.SeedPurchases();
-        };
-    }
+//    @Bean
+//    CommandLineRunner commandLineRunner() {
+//        return args -> {
+//            userDataSeeder.Seed();
+//            productImportService.fetchAndSaveProducts();
+//            purchaseService.SeedPurchases();
+//        };
+//    }
 }
