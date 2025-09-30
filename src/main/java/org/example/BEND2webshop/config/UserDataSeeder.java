@@ -1,11 +1,9 @@
-package org.example.BEND2webshop.security;
+package org.example.BEND2webshop.config;
 
 import org.example.BEND2webshop.models.UserRole;
-import org.example.BEND2webshop.repositories.PurchaseRepository;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.example.BEND2webshop.repositories.UserRoleRepository;
 import org.example.BEND2webshop.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Set;
 
