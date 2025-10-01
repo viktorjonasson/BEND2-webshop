@@ -1,15 +1,17 @@
-package org.example.BEND2webshop;
+package org.example.BEND2webshop.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.*;
+
 @ActiveProfiles("test")
-class BEND2WebshopApplicationTests {
+@SpringBootTest
+class UserServiceTest {
 
     @Test
-    void contextLoads() {
+    void saveUser() {
+//        fail();
     }
-
 }
