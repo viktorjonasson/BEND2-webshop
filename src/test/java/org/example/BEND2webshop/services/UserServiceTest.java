@@ -18,9 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class UserServiceTest {
     @Autowired
-    UserDataSeeder userDataSeeder;
-
-    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -32,7 +29,6 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        userDataSeeder.Seed();
         username = "test-user";
         password = "test-password";
         roles = Set.of("admin");
