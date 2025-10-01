@@ -4,7 +4,6 @@ import org.example.BEND2webshop.exceptions.ProductNotFoundException;
 import org.example.BEND2webshop.models.*;
 import org.example.BEND2webshop.repositories.ProductRepository;
 import org.example.BEND2webshop.repositories.PurchaseRepository;
-import org.example.BEND2webshop.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,14 +26,11 @@ class PurchaseServiceTest {
     @Mock
     private PurchaseRepository purchaseRepository;
 
-    @Mock
-    private UserRepository userRepository;
-
     private PurchaseService purchaseService;
 
     @BeforeEach
     void setUp() {
-        purchaseService = new PurchaseService(purchaseRepository, productRepository, userRepository);
+        purchaseService = new PurchaseService(purchaseRepository, productRepository);
     }
 
     @Test
