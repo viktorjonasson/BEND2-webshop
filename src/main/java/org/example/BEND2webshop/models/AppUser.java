@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,5 +26,6 @@ public class AppUser {
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.DETACH)
     private List<UserRole> roles;
 }

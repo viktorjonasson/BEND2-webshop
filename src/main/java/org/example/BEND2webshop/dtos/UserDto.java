@@ -2,9 +2,11 @@ package org.example.BEND2webshop.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+@Builder
 @Data
 public class UserDto {
     @NotNull
