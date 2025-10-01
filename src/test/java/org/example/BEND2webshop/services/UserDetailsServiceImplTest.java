@@ -1,6 +1,5 @@
 package org.example.BEND2webshop.services;
 
-import org.example.BEND2webshop.config.UserDataSeeder;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,9 +45,7 @@ class UserDetailsServiceImplTest {
     @Test
     void shouldThrowExceptionWhenUserNotExists() {
         assertNull(userRepository.findByUsernameIgnoreCase(notExistingUsername));
-        assertThrows(UsernameNotFoundException.class, () -> {
-            userDetailsService.loadUserByUsername(notExistingUsername);
-        });
+        assertThrows(UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername(notExistingUsername));
     }
 
     @Test
