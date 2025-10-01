@@ -1,6 +1,7 @@
 package org.example.BEND2webshop.services;
 
 import org.example.BEND2webshop.config.UserDataSeeder;
+import org.example.BEND2webshop.exceptions.UsernameNotAvailableException;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +46,7 @@ class UserServiceTest {
 
         userService.saveUser(username, roles, password);
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(UsernameNotAvailableException.class, () -> {
             userService.saveUser(username, roles, password);
         });
     }
