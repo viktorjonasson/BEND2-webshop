@@ -1,25 +1,29 @@
 package org.example.BEND2webshop.controllers;
 
 import jakarta.validation.Valid;
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.example.BEND2webshop.dtos.UserDto;
-import org.example.BEND2webshop.models.AppUser;
+import org.example.BEND2webshop.exceptions.UsernameNotAvailableException;
 import org.example.BEND2webshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Set;
 
 @Controller
 public class RegisterController {
+    public static final String INVALID_USERNAME_OR_PASSWORD = "Invalid input, username and password must be between 2-30 characters.",
+            NOT_PERMITTED = "Not permitted.",
+            ACCOUNT_CREATED = "Account created.",
+            SUCCESS = "success",
+            ERROR = "error",
+            FEEDBACK_CONTENT = "feedbackContent",
+            FEEDBACK_TYPE = "feedbackType";
 
     @Autowired
     UserService userService;
@@ -33,13 +37,13 @@ public class RegisterController {
     @PostMapping("/register")
     public String register(@ModelAttribute @Valid UserDto user, RedirectAttributes redirectAttributes, Model model) {
         if (user.getRole().contains("admin")) {
-            model.addAttribute("feedbackContent", "Not permitted.");
-            model.addAttribute("feedbackType", "error");
+            model.addAttribute(FEEDBACK_CONTENT, NOT_PERMITTED);
+            model.addAttribute(FEEDBACK_CONTENT, ERROR);
             return "register";
         }
         userService.saveUser(user.getUsername(), Set.of(user.getRole()), user.getPassword());
-        redirectAttributes.addFlashAttribute("feedbackContent", "Account created. You can now sign in.");
-        redirectAttributes.addFlashAttribute("feedbackType", "success");
+        redirectAttributes.addFlashAttribute(FEEDBACK_CONTENT, ACCOUNT_CREATED);
+        redirectAttributes.addFlashAttribute(FEEDBACK_TYPE, SUCCESS);
         return "redirect:register";
     }
 
@@ -47,22 +51,24 @@ public class RegisterController {
     @PostMapping("/register-admin")
     public String registerAdmin(@ModelAttribute @Valid UserDto user, RedirectAttributes redirectAttributes) {
         userService.saveUser(user.getUsername(), Set.of(user.getRole()), user.getPassword());
-        redirectAttributes.addFlashAttribute("feedbackContent", "Account created.");
-        redirectAttributes.addFlashAttribute("feedbackType", "success");
+        redirectAttributes.addFlashAttribute(FEEDBACK_CONTENT, ACCOUNT_CREATED);
+        redirectAttributes.addFlashAttribute(FEEDBACK_TYPE, SUCCESS);
         return "redirect:register";
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String illegalArgument(Model model, IllegalArgumentException exception) {
-        model.addAttribute("feedbackContent", exception.getMessage());
-        model.addAttribute("feedbackType", "error");
+    @ExceptionHandler(UsernameNotAvailableException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String usernameNotAvailable(Model model, UsernameNotAvailableException exception) {
+        model.addAttribute(FEEDBACK_CONTENT, exception.getMessage());
+        model.addAttribute(FEEDBACK_TYPE, ERROR);
         return "register";
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String invalidArguments(Model model) {
-        model.addAttribute("feedbackContent", "Invalid input, username and password must be between 2-30 characters.");
-        model.addAttribute("feedbackType", "error");
+        model.addAttribute(FEEDBACK_CONTENT, INVALID_USERNAME_OR_PASSWORD);
+        model.addAttribute(FEEDBACK_TYPE, ERROR);
         return "register";
     }
 }
