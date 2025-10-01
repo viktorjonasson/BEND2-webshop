@@ -1,7 +1,7 @@
 package org.example.BEND2webshop.services;
 
+import org.example.BEND2webshop.config.UserDataSeeder;
 import org.example.BEND2webshop.repositories.UserRepository;
-import org.example.BEND2webshop.security.UserDataSeeder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
