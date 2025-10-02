@@ -36,7 +36,7 @@ public class RegisterController {
 
 
     @PostMapping("/register")
-    public String register(@ModelAttribute @Valid UserDto user, RedirectAttributes redirectAttributes, Model model) {
+    public String register(@ModelAttribute @Valid UserDto user, RedirectAttributes redirectAttributes) {
         if (user.getRole().contains("admin"))
             throw new AuthorizationDeniedException(NOT_PERMITTED);
         userService.saveUser(user.getUsername(), Set.of(user.getRole()), user.getPassword());
