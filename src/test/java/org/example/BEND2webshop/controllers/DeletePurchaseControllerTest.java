@@ -63,4 +63,11 @@ class DeletePurchaseControllerTest {
 
         verify(purchaseService, never()).deletePurchase(any());
     }
+
+    @Test
+    void shouldDeletePurchase() {
+        Long purchaseId = 1L;
+        purchaseService.deletePurchase(purchaseId);
+        verify(purchaseService, times(1)).deletePurchase(purchaseId);
+    }
 }

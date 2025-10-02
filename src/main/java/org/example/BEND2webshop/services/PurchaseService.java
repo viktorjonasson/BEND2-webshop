@@ -69,7 +69,7 @@ public class PurchaseService {
         }
     }
 
-    private PurchaseDto toDto(Purchase p) {
+    PurchaseDto toDto(Purchase p) {
         return new PurchaseDto(
                 p.getId(),
                 p.getPurchaseDate(),

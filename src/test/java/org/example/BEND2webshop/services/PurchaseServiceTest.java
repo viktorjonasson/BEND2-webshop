@@ -1,5 +1,6 @@
 package org.example.BEND2webshop.services;
 
+import org.example.BEND2webshop.dtos.PurchaseDto;
 import org.example.BEND2webshop.exceptions.ProductNotFoundException;
 import org.example.BEND2webshop.models.*;
 import org.example.BEND2webshop.repositories.ProductRepository;
@@ -76,4 +77,58 @@ class PurchaseServiceTest {
 
         verify(purchaseRepository, never()).save(any());
     }
+
+    @Test
+    void shouldDecreasePurchaseCountWhenDeletingExistingPurchase() {
+        Long purchaseId = 1L;
+
+        Purchase mockPurchase = new Purchase();
+        mockPurchase.setId(purchaseId);
+
+        when(purchaseRepository.findById(purchaseId))
+                .thenReturn(Optional.of(mockPurchase));
+
+        purchaseService.deletePurchase(purchaseId);
+
+        verify(purchaseRepository).deleteById(purchaseId);
+    }
+
+    @Test
+    void shouldThrowWhenDeletingNonExistingPurchase() {
+        Long purchaseId = 2902390230L;
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            purchaseService.deletePurchase(purchaseId);
+        });
+    }
+
+    @Test
+    void shouldMapDto() {
+        Long purchaseId = 1L;
+        Long productId = 2L;
+        UUID userId = UUID.randomUUID();
+        String productTitle = "Test Product";
+        double productPrice = 19.99;
+
+        Product mockProduct = new Product();
+        mockProduct.setId(productId);
+        mockProduct.setTitle(productTitle);
+        mockProduct.setPrice(productPrice);
+
+        AppUser mockUser = new AppUser();
+        mockUser.setId(userId);
+
+        Purchase mockPurchase = new Purchase();
+        mockPurchase.setId(purchaseId);
+        mockPurchase.setProduct(mockProduct);
+        mockPurchase.setAppUser(mockUser);
+        mockPurchase.setPurchaseDate(java.time.LocalDateTime.of(2023, 10, 1, 12, 0));
+        PurchaseDto dto = purchaseService.toDto(mockPurchase);
+        assertEquals(purchaseId, dto.getId());
+        assertEquals(productId, dto.getProductId());
+        assertEquals(productTitle, dto.getProductTitle());
+        assertEquals(productPrice, dto.getProductPrice());
+        assertEquals(userId, dto.getUserId());
+        assertEquals(mockPurchase.getPurchaseDate(), dto.getPurchaseDate());
+    }
+
 }
