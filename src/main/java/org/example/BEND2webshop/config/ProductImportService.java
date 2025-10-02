@@ -1,4 +1,4 @@
-package org.example.BEND2webshop.services;
+package org.example.BEND2webshop.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.BEND2webshop.dtos.ProductDto;

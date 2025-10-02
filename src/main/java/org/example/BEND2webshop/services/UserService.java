@@ -1,17 +1,16 @@
 package org.example.BEND2webshop.services;
 
+import org.example.BEND2webshop.exceptions.UsernameNotAvailableException;
 import org.example.BEND2webshop.models.AppUser;
-import org.example.BEND2webshop.models.UserRole;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.example.BEND2webshop.repositories.UserRoleRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Set;
 
 @Service
 public class UserService {
+    public static final String USERNAME_UNAVAILABLE = "Username is not available, pick another.";
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
@@ -23,7 +22,7 @@ public class UserService {
 
     public void saveUser(String username, Set<String> roles, String password) {
         if (userRepository.findByUsernameIgnoreCase(username) != null) {
-            throw new IllegalArgumentException("username exists");
+            throw new UsernameNotAvailableException(USERNAME_UNAVAILABLE);
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
