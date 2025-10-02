@@ -10,16 +10,6 @@ import java.util.UUID;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
-
-    // Admin
-
-    List<Purchase> findAll();
-
     List<Purchase> findByAppUser(AppUser currentUser);
-
-
-    // User
-
-//    List<Purchase> findByUserId(Long id);
 
 }
