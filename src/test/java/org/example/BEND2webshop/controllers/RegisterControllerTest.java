@@ -4,6 +4,7 @@ import org.example.BEND2webshop.models.AppUser;
 import org.example.BEND2webshop.models.UserRole;
 import org.example.BEND2webshop.repositories.UserRepository;
 import org.example.BEND2webshop.security.ConcreteUserDetails;
+import org.example.BEND2webshop.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,12 +17,14 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -36,6 +39,8 @@ class  RegisterControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserService userService;
 
     private MultiValueMap<String, String> validCustomerForm, invalidForm;
     private ConcreteUserDetails admin;
@@ -54,6 +59,18 @@ class  RegisterControllerTest {
     }
 
     @Test
+    void shouldReturnRegister() {
+        try {
+            mockMvc.perform(get("/register"))
+                    .andExpect(status().is2xxSuccessful())
+                    .andExpect(content().string(containsString("<title>Register</title>")));
+
+        } catch (Exception e) {
+            fail("Unexpected Exception", e);
+        }
+    }
+
+    @Test
     void registerShouldShowErrorForInvalidForm() {
         try {
             mockMvc.perform(post("/register")
@@ -62,6 +79,37 @@ class  RegisterControllerTest {
                     .andExpect(status().is4xxClientError())
                     .andExpect(content().string(containsString(RegisterController.ERROR)))
                     .andExpect(content().string(containsString(RegisterController.INVALID_USERNAME_OR_PASSWORD)));
+        } catch (Exception e) {
+            fail("Unexpected Exception", e);
+        }
+    }
+
+    @Test
+    void registerShouldReturnForbiddenForAdminInForm() {
+        try {
+            var validAdminForm = getTestFormFields("test", "admin");
+            mockMvc.perform(post("/register")
+                            .with(csrf())
+                            .formFields(validAdminForm))
+                    .andExpect(status().isForbidden())
+                    .andExpect(content().string(containsString(RegisterController.ERROR)))
+                    .andExpect(content().string(containsString(RegisterController.NOT_PERMITTED)));
+        } catch (Exception e) {
+            fail("Unexpected Exception", e);
+        }
+    }
+
+    @Test
+    void registerShouldReturnErrorForExistingUsername() {
+        try {
+            userService.saveUser("test", Set.of("customer"), "password");
+
+            mockMvc.perform(post("/register")
+                            .with(csrf())
+                            .formFields(validCustomerForm))
+                    .andExpect(status().is4xxClientError())
+                    .andExpect(content().string(containsString(RegisterController.ERROR)))
+                    .andExpect(content().string(containsString(UserService.USERNAME_UNAVAILABLE)));
         } catch (Exception e) {
             fail("Unexpected Exception", e);
         }
