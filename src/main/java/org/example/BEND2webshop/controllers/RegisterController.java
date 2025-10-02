@@ -7,6 +7,7 @@ import org.example.BEND2webshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -35,12 +36,9 @@ public class RegisterController {
 
 
     @PostMapping("/register")
-    public String register(@ModelAttribute @Valid UserDto user, RedirectAttributes redirectAttributes, Model model) {
-        if (user.getRole().contains("admin")) {
-            model.addAttribute(FEEDBACK_CONTENT, NOT_PERMITTED);
-            model.addAttribute(FEEDBACK_CONTENT, ERROR);
-            return "register";
-        }
+    public String register(@ModelAttribute @Valid UserDto user, RedirectAttributes redirectAttributes) {
+        if (user.getRole().contains("admin"))
+            throw new AuthorizationDeniedException(NOT_PERMITTED);
         userService.saveUser(user.getUsername(), Set.of(user.getRole()), user.getPassword());
         redirectAttributes.addFlashAttribute(FEEDBACK_CONTENT, ACCOUNT_CREATED);
         redirectAttributes.addFlashAttribute(FEEDBACK_TYPE, SUCCESS);
@@ -60,6 +58,14 @@ public class RegisterController {
     @ResponseStatus(HttpStatus.CONFLICT)
     public String usernameNotAvailable(Model model, UsernameNotAvailableException exception) {
         model.addAttribute(FEEDBACK_CONTENT, exception.getMessage());
+        model.addAttribute(FEEDBACK_TYPE, ERROR);
+        return "register";
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String forbiddenRole(Model model, AuthorizationDeniedException e) {
+        model.addAttribute(FEEDBACK_CONTENT, e.getMessage());
         model.addAttribute(FEEDBACK_TYPE, ERROR);
         return "register";
     }
