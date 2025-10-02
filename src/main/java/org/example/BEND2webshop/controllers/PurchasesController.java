@@ -24,6 +24,7 @@ public class PurchasesController {
         this.purchaseService = purchaseService;
     }
 
+
     @GetMapping
     public String getPurchases(Model model, @AuthenticationPrincipal ConcreteUserDetails userDetails) {
         model.addAttribute("purchases", purchaseService.getPurchasesForCurrentUser(userDetails));
@@ -39,3 +40,5 @@ public class PurchasesController {
         return "redirect:/purchases";
     }
 }
+
+
