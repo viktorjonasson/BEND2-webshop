@@ -50,6 +50,7 @@ public class PurchasesControllerTest {
         mockMvc.perform(get("/purchases"))
                 .andExpect(status().isUnauthorized());
 
+        assert false;
         verifyNoInteractions(purchaseService);
     }
 
